@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler
-
+from config import configuration
 
 async def hello(update: Update, context: ContextTypes) -> None:
     menu_main = [[InlineKeyboardButton('Option 1', callback_data='m1'),InlineKeyboardButton('Option 4', callback_data='m4')],
@@ -10,7 +10,7 @@ async def hello(update: Update, context: ContextTypes) -> None:
     
     await update.message.reply_html("<b>Negrita</b>lakdjfhdfjhaldfjh");
     await update.message.reply_text('Choose the option: '+str(update.effective_user.id), reply_markup=reply_markup)
-    await update.message.reply_photo(photo=open('resources\static\img\hn.jpg','rb'))
+    await update.message.reply_photo(photo=open(configuration['static_img_path']+'hn.jpg','rb'))
     #update.message.reply_text(f'Ridel\'s bot responds {update.effective_user.username}')
 
 async def message_handler(update:Update,context:ContextTypes) -> None:
@@ -19,7 +19,7 @@ async def message_handler(update:Update,context:ContextTypes) -> None:
 
 
 def main() -> int:
-    app = ApplicationBuilder().token("5375112670:AAH9YRtoR0n4FwOpxS68IdVi6luUk6I3KEg").build()
+    app = ApplicationBuilder().token(configuration['bot_token']).build()
 
     app.add_handler(CommandHandler("ver", hello))    
 
